@@ -1,0 +1,45 @@
+name: Publish verified release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+      - name: Install GUI runtime dependencies
+        run: sudo apt-get update && sudo apt-get install -y python3-tk python3-gi gir1.2-ayatanaappindicator3-0.1 xvfb xauth
+      - name: Verify tag and source version
+        run: |
+          version="$(python3 -c 'from hermes_control import __version__; print(__version__)')"
+          test "${GITHUB_REF_NAME}" = "v${version}"
+      - name: Run tests and static checks
+        run: |
+          python3 -m unittest discover -s tests -v
+          python3 -m compileall -q launcher.py hermes_control scripts tests
+          bash -n install.sh uninstall.sh
+          timeout 8s xvfb-run -a python3 launcher.py || test $? -eq 124
+      - name: Build and verify upgrade
+        run: |
+          python3 scripts/build_release.py
+          python3 scripts/verify_release_upgrade.py
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="$(python3 -c 'from hermes_control import __version__; print(__version__)')"
+          gh release create "v${version}" \
+            "dist/Hermes-Helper-${version}.zip" \
+            "dist/update.json" \
+            --title "Hermes-Helper v${version}" \
+            --notes "Native XFCE system tray, named model profiles, visual HEAD ALPHA agent teams, safe Hermes delegation controls, and an operational verified update channel."

@@ -1,6 +1,6 @@
 [project]
 name = "hermes-helper"
-version = "1.0.4"
+version = "1.0.5"
 description = "A cloud-aware Linux control center for Hermes Agent, Ollama, Telegram, and thermal monitoring."
 requires-python = ">=3.10"
 license = {text = "MIT"}

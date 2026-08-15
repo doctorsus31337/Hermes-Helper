@@ -59,6 +59,8 @@ def check_for_update(manifest_url: str, current_version: str, timeout: float = 1
         if int(response.headers.get("Content-Length", "0") or 0) > 1_000_000:
             raise RuntimeError("Update manifest is unexpectedly large.")
         data = json.loads(response.read(1_000_001).decode("utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError("Update manifest root must be a JSON object.")
     version = str(data.get("version", "")).strip()
     download_url = _https_url(str(data.get("download_url", "")).strip(), "Update download URL")
     sha256 = str(data.get("sha256", "")).strip().lower()
