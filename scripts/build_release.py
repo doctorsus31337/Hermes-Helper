@@ -64,7 +64,7 @@ def build() -> tuple[Path, Path]:
         "download_url": f"https://github.com/doctorsus31337/Hermes-Helper/releases/download/v{__version__}/{archive.name}",
         "sha256": digest,
         "published_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-        "notes": "Native XFCE tray dashboard, named model profiles, and a visual HEAD ALPHA Agent Studio backed by validated Hermes delegation settings.",
+        "notes": "A new purpose-built Gothic blackglass icon family with separate high-detail application and small-panel tray artwork.",
     }
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     return archive, manifest_path

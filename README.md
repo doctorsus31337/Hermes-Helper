@@ -32,7 +32,7 @@ Hermes-Helper is a gothic-styled Linux control center for cloud-backed or local 
 Requirements: Linux, Python 3.10+, Tkinter, PyGObject/AppIndicator (`python3-gi` and `gir1.2-ayatanaappindicator3-0.1` on Kali/Debian), and an existing Hermes/Ollama setup.
 
 ```bash
-unzip Hermes-Helper-1.0.5.zip
+unzip Hermes-Helper-1.0.6.zip
 cd Hermes-Helper
 chmod +x install.sh uninstall.sh
 ./install.sh

@@ -30,6 +30,11 @@ from .tray import TrayWindowController
 from .updater import UpdateInfo, check_for_update, download_update, launch_installer, stage_update
 
 
+APP_ICON_FILENAME = "hermes_helper_icon.png"
+WINDOW_ICON_FILENAME = "hermes_helper_window.png"
+TRAY_ICON_FILENAME = "hermes_helper_tray.png"
+
+
 COLORS = {
     "bg": "#08090b",
     "panel": "#111318",
@@ -107,7 +112,7 @@ class HermesHelperApp:
         self._set_icon()
         self.tray_window = TrayWindowController(
             self.root,
-            application_root() / "assets" / "hermes_helper_icon.png",
+            application_root() / "assets" / TRAY_ICON_FILENAME,
             self.exit_application,
             can_exit=self.can_exit_application,
         )
@@ -140,7 +145,7 @@ class HermesHelperApp:
             pass
 
     def _set_icon(self) -> None:
-        icon = application_root() / "assets" / "hermes_helper_icon.png"
+        icon = application_root() / "assets" / WINDOW_ICON_FILENAME
         try:
             self._icon_image = tk.PhotoImage(file=str(icon))
             self.root.iconphoto(True, self._icon_image)
@@ -1371,7 +1376,7 @@ class HermesHelperApp:
             self.config.normalized()
             save_config(self.config)
             launcher = Path(shutil.which("hermes-helper") or (application_root() / "launcher.py"))
-            icon = application_root() / "assets" / "hermes_helper_icon.png"
+            icon = application_root() / "assets" / APP_ICON_FILENAME
             set_graphical_login_start(self.login_start_var.get(), launcher, icon)
             self.controller = ProcessController(self.config)
             self.probe = StatusProbe(self.config)

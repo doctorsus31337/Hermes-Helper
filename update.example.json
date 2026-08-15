@@ -1,7 +1,7 @@
 {
-  "version": "1.0.5",
-  "download_url": "https://github.com/doctorsus31337/Hermes-Helper/releases/download/v1.0.5/Hermes-Helper-1.0.5.zip",
+  "version": "1.0.6",
+  "download_url": "https://github.com/doctorsus31337/Hermes-Helper/releases/download/v1.0.6/Hermes-Helper-1.0.6.zip",
   "sha256": "REPLACE_WITH_THE_64_CHARACTER_SHA256_DIGEST",
   "published_at": "2026-08-15T12:00:00Z",
-  "notes": "Adds an XFCE tray dashboard, named model profiles, and a visual Hermes Agent Studio with HEAD ALPHA delegation teams."
+  "notes": "Adds a purpose-built Gothic blackglass icon family with separate application and small-panel tray artwork."
 }

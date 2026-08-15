@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify that the current installer upgrades a clean v1.0.4 install."""
+"""Verify that the current installer upgrades the previous public release."""
 
 from __future__ import annotations
 
@@ -13,6 +13,12 @@ import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from hermes_control import __version__  # noqa: E402
+
+
+BASELINE_VERSION = "1.0.5"
+TARGET_VERSION = __version__
 
 
 def run(command: list[str], *, cwd: Path, env: dict[str, str] | None = None) -> None:
@@ -30,14 +36,20 @@ def version_at(path: Path) -> str:
 
 
 def main() -> None:
-    archive = ROOT / "dist" / "Hermes-Helper-1.0.5.zip"
+    archive = ROOT / "dist" / f"Hermes-Helper-{TARGET_VERSION}.zip"
     if not archive.is_file():
         raise RuntimeError(f"Build the release first: {archive}")
     with tempfile.TemporaryDirectory(prefix="hermes-helper-upgrade-") as raw_temp:
         temp = Path(raw_temp)
         baseline_zip = temp / "baseline.zip"
         with baseline_zip.open("wb") as handle:
-            completed = subprocess.run(["git", "archive", "--format=zip", "v1.0.4"], cwd=ROOT, stdout=handle, stderr=subprocess.PIPE, check=False)
+            completed = subprocess.run(
+                ["git", "archive", "--format=zip", f"v{BASELINE_VERSION}"],
+                cwd=ROOT,
+                stdout=handle,
+                stderr=subprocess.PIPE,
+                check=False,
+            )
         if completed.returncode:
             raise RuntimeError(completed.stderr.decode("utf-8", errors="replace"))
         baseline = temp / "baseline"
@@ -63,24 +75,29 @@ def main() -> None:
         })
         run(["bash", "install.sh"], cwd=baseline, env=env)
         installed = home / ".local" / "share" / "hermes-helper"
-        if version_at(installed) != "1.0.4":
-            raise RuntimeError("Baseline installer did not install v1.0.4")
+        if version_at(installed) != BASELINE_VERSION:
+            raise RuntimeError(f"Baseline installer did not install v{BASELINE_VERSION}")
         run(["bash", "install.sh", "--update"], cwd=current_source, env=env)
-        if version_at(installed) != "1.0.5":
-            raise RuntimeError("Upgrade did not install v1.0.5")
+        if version_at(installed) != TARGET_VERSION:
+            raise RuntimeError(f"Upgrade did not install v{TARGET_VERSION}")
         required = (
             installed / "hermes_control" / "agents.py",
             installed / "hermes_control" / "models.py",
             installed / "hermes_control" / "presets.py",
             installed / "hermes_control" / "tray.py",
+            installed / "assets" / "hermes_helper_icon.svg",
+            installed / "assets" / "hermes_helper_icon.png",
+            installed / "assets" / "hermes_helper_window.png",
+            installed / "assets" / "hermes_helper_tray.svg",
+            installed / "assets" / "hermes_helper_tray.png",
         )
         missing = [str(path) for path in required if not path.is_file()]
         if missing:
-            raise RuntimeError(f"Upgrade omitted required v1.0.5 modules: {missing}")
+            raise RuntimeError(f"Upgrade omitted required v{TARGET_VERSION} files: {missing}")
         backups = sorted((home / ".local" / "state" / "hermes-helper" / "backups").glob("Hermes-Helper-*"))
-        if not backups or version_at(backups[-1]) != "1.0.4":
-            raise RuntimeError("Upgrade did not preserve a v1.0.4 rollback backup")
-        print("upgrade_v1.0.4_to_v1.0.5=verified")
+        if not backups or version_at(backups[-1]) != BASELINE_VERSION:
+            raise RuntimeError(f"Upgrade did not preserve a v{BASELINE_VERSION} rollback backup")
+        print(f"upgrade_v{BASELINE_VERSION}_to_v{TARGET_VERSION}=verified")
 
 
 if __name__ == "__main__":
