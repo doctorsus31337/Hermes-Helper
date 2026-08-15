@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Hermes-Helper Blackglass Sigil</title>
+  <desc id="desc">A crimson H sigil within an antique-gold edged blackglass shield, crowned by angular wings.</desc>
+  <defs>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#242129"/>
+      <stop offset="0.44" stop-color="#090a0d"/>
+      <stop offset="1" stop-color="#16070a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#fff0a8"/>
+      <stop offset="0.28" stop-color="#d7a84f"/>
+      <stop offset="0.68" stop-color="#8a5520"/>
+      <stop offset="1" stop-color="#f0c568"/>
+    </linearGradient>
+    <linearGradient id="blood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff5145"/>
+      <stop offset="0.45" stop-color="#b91420"/>
+      <stop offset="1" stop-color="#56030b"/>
+    </linearGradient>
+    <radialGradient id="ember" cx="50%" cy="45%" r="60%">
+      <stop offset="0" stop-color="#ff6a4f"/>
+      <stop offset="0.38" stop-color="#b31720"/>
+      <stop offset="1" stop-color="#310106"/>
+    </radialGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="blur"/>
+      <feOffset dy="10" result="offset"/>
+      <feColorMatrix in="offset" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .72 0"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <!-- Winged crown: an angular nod to Hermes, readable without fine linework. -->
+    <path d="M246 93 L188 47 L117 38 L157 72 L84 66 L143 111 L78 121 L179 146 Z"
+          fill="#d5a446" stroke="#35170e" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M266 93 L324 47 L395 38 L355 72 L428 66 L369 111 L434 121 L333 146 Z"
+          fill="#d5a446" stroke="#35170e" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M241 95 L256 28 L271 95 L256 127 Z" fill="#c51f2b" stroke="#d9aa50" stroke-width="7"/>
+
+    <!-- Layered blackglass shield. -->
+    <path d="M256 73 L421 128 L399 326 Q385 421 256 482 Q127 421 113 326 L91 128 Z"
+          fill="#120306" stroke="#3c070d" stroke-width="20" stroke-linejoin="round"/>
+    <path d="M256 76 L410 132 L389 322 Q376 407 256 466 Q136 407 123 322 L102 132 Z"
+          fill="#111116" stroke="#d9aa50" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M256 98 L387 145 L368 315 Q357 386 256 440 Q155 386 144 315 L125 145 Z"
+          fill="none" stroke="#7d141b" stroke-width="5" opacity=".95"/>
+
+    <!-- Obsidian facets create a polished blackglass surface. -->
+    <path d="M133 147 L256 101 L256 437 Q158 382 147 311 Z" fill="#ffffff" opacity=".035"/>
+    <path d="M256 101 L383 147 L365 313 Q356 377 256 437 Z" fill="#7b0712" opacity=".09"/>
+    <path d="M154 169 L239 139 L185 244 Z" fill="#ffffff" opacity=".055"/>
+
+    <!-- Purpose-built H sigil with blade-cut terminals. -->
+    <path d="M159 174 L222 174 L207 195 L207 257 L305 257 L305 195 L290 174 L353 174 L339 197 L339 382 L354 407 L290 407 L305 382 L305 319 L207 319 L207 382 L222 407 L158 407 L173 382 L173 199 Z"
+          fill="#c51f2b" stroke="#d9aa50" stroke-width="8" stroke-linejoin="miter"/>
+    <path d="M189 196 L189 382 M323 196 L323 382" stroke="#ff5a48" stroke-width="5" opacity=".35"/>
+    <path d="M211 275 H301 V301 H211 Z" fill="#08090b" opacity=".55"/>
+
+    <!-- Central seal. -->
+    <path d="M256 267 L286 288 L256 313 L226 288 Z" fill="#d5a446" stroke="#4c160e" stroke-width="5"/>
+    <path d="M256 277 L273 289 L256 303 L239 289 Z" fill="#bd1723"/>
+    <circle cx="256" cy="289" r="5" fill="#ffe6a0"/>
+
+    <!-- Three discreet rivets hold detail at medium sizes. -->
+    <g fill="#e8bd67" stroke="#4b2714" stroke-width="3">
+      <circle cx="256" cy="129" r="7"/>
+      <circle cx="155" cy="327" r="6"/>
+      <circle cx="357" cy="327" r="6"/>
+    </g>
+  </g>
+</svg>
