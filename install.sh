@@ -30,6 +30,13 @@ if [[ "${HERMES_HELPER_SKIP_TK_CHECK:-0}" != "1" ]]; then
     }
 fi
 
+if [[ "${HERMES_HELPER_SKIP_TRAY_CHECK:-0}" != "1" ]]; then
+    python3 -c 'import gi; gi.require_version("Gtk", "3.0"); gi.require_version("AyatanaAppIndicator3", "0.1"); from gi.repository import AyatanaAppIndicator3, Gtk' >/dev/null 2>&1 || {
+        printf 'Hermes-Helper requires the native system-tray bindings. Install them first (on Kali/Debian: sudo apt install python3-gi gir1.2-ayatanaappindicator3-0.1).\n' >&2
+        exit 1
+    }
+fi
+
 mkdir -p "$bin_root" "$applications_root" "$backup_root"
 
 if [[ -d "$install_root" ]]; then

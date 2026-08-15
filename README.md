@@ -10,6 +10,9 @@ Hermes-Helper is a gothic-styled Linux control center for cloud-backed or local 
 - Never kills or restarts Hermes merely because the GUI was opened.
 - Detects an existing Ollama server and leaves externally managed instances alone.
 - Reads the active Hermes provider, model, context length, and output limit without reading credentials.
+- Provides a dedicated **Model Settings** tab that applies provider, model, context, and output-token changes through the official Hermes CLI, validates them, and rolls back a failed update.
+- Saves multiple named, non-secret **Model Profiles** for fast switching between cloud, local, reasoning, and lightweight configurations.
+- Includes an **Agent Studio** with a visual **HEAD ALPHA → specialist branches** tree, reusable team presets, generated orchestration briefs, and safe setup of Hermes's built-in delegation model/concurrency.
 - Verifies the Ollama HTTP API, installed models, loaded models, and runtime context only when local inference is active.
 - Monitors Hermes and Ollama PID, CPU, memory, and live gateway logs.
 - Refuses to treat a root-owned or other-user gateway as a successful managed launch.
@@ -17,7 +20,7 @@ Hermes-Helper is a gothic-styled Linux control center for cloud-backed or local 
 - Isolates unreadable legacy log files so they appear as targeted diagnostic warnings without freezing unrelated status checks.
 - Checks Telegram configuration without revealing the bot token, verifies the Bot API, distinguishes that from an active gateway connection, and can send an explicit test message.
 - Opens Hermes's official interactive Telegram setup wizard from the Telegram tab without collecting or displaying the bot token.
-- Minimizes explicitly to the desktop taskbar while leaving the model, gateway, Telegram connection, and monitoring active.
+- Runs as a native XFCE system-tray application. The dashboard is omitted from the normal taskbar, and closing or minimizing it hides the window without stopping monitoring or services.
 - Monitors Linux `hwmon` temperature sensors and names the exact source used for CPU warnings.
 - Audits standard user and system startup locations for legacy Hermes launchers.
 - Defaults to **no automatic startup**. Optional startup runs only after graphical login and never auto-starts the LLM.
@@ -26,10 +29,10 @@ Hermes-Helper is a gothic-styled Linux control center for cloud-backed or local 
 
 ## Install
 
-Requirements: Linux, Python 3.10+, Tkinter, and an existing Hermes/Ollama setup.
+Requirements: Linux, Python 3.10+, Tkinter, PyGObject/AppIndicator (`python3-gi` and `gir1.2-ayatanaappindicator3-0.1` on Kali/Debian), and an existing Hermes/Ollama setup.
 
 ```bash
-unzip Hermes-Helper-1.0.4.zip
+unzip Hermes-Helper-1.0.5.zip
 cd Hermes-Helper
 chmod +x install.sh uninstall.sh
 ./install.sh
@@ -69,6 +72,24 @@ qwen3-4b-2507-abliterated-tools:latest
 Runtime context defaults to `16,384` tokens while the model can remain advertised to Hermes with a `65,536` context capability.
 
 When `~/.hermes/config.yaml` selects a cloud provider such as `openai-codex`, **Start Server** leaves Ollama unloaded and starts only the user-owned Hermes Gateway. Closing Hermes-Helper does not stop that detached gateway; use **Stop Server** when you want to take Telegram offline.
+
+## Model settings
+
+The **Model Settings** tab reads only Hermes's non-secret `model` configuration. It can update the provider, default model, context length, and maximum output tokens. Hermes-Helper invokes `hermes config set` with argument arrays (never a shell), runs `hermes config check`, and restores all previous model values if any write or validation step fails. Existing sessions retain their current model; restart a long-running gateway when you want it to adopt the new default immediately.
+
+Named Model Profiles are stored in `~/.config/hermes-helper/presets.json` with owner-only permissions. Profiles contain routing names and token limits only—never API keys, OAuth tokens, or other credentials. Loading a profile fills the editor; activating it remains a separate, explicit **Validate & Apply** action.
+
+## Agent Studio
+
+The **Agent Studio** builds reusable delegation teams around Hermes's actual `delegate_task` engine:
+
+- **HEAD ALPHA** uses the selected head model profile and synthesizes the final result.
+- The expandable `+ Add Agent Branch` tree defines up to eight focused specialist roles.
+- A worker model profile configures Hermes's supported `delegation.provider` and `delegation.model` settings for all branches.
+- Parallelism is bounded, nesting is fixed to one level, and Hermes's existing approval policy is left unchanged.
+- **Build Brief** generates a grounded orchestration prompt that dispatches branches in bounded waves, waits for real results, reconciles disagreements, and labels uncertainty.
+
+The current Hermes runtime supports one delegation model for all child agents, not a separate model per branch. Hermes-Helper reflects that limitation honestly instead of pretending per-child routing exists. Team application uses only supported `hermes config set` commands, validates with `hermes config check`, and rolls back failed changes.
 
 ## Startup repair
 

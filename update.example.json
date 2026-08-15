@@ -1,7 +1,7 @@
 {
-  "version": "1.0.4",
-  "download_url": "https://github.com/doctorsus31337/Hermes-Helper/releases/download/v1.0.4/Hermes-Helper-1.0.4.zip",
+  "version": "1.0.5",
+  "download_url": "https://github.com/doctorsus31337/Hermes-Helper/releases/download/v1.0.5/Hermes-Helper-1.0.5.zip",
   "sha256": "REPLACE_WITH_THE_64_CHARACTER_SHA256_DIGEST",
-  "published_at": "2026-08-12T12:00:00Z",
-  "notes": "Adds cloud-aware, terminal-free Hermes Gateway controls and accurate provider/model readiness."
+  "published_at": "2026-08-15T12:00:00Z",
+  "notes": "Adds an XFCE tray dashboard, named model profiles, and a visual Hermes Agent Studio with HEAD ALPHA delegation teams."
 }
